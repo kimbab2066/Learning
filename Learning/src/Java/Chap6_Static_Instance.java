@@ -1,6 +1,6 @@
 package Java;
 
-public class Chapter6 {
+public class Chap6_Static_Instance {
 	static {
 		System.out.println("static부분~");
 	}
@@ -9,15 +9,15 @@ public class Chapter6 {
 		System.out.println("instance부분~");
 	}
 
-	Chapter6() {
+	Chap6_Static_Instance() {
 		System.out.println("생성자~");
 	}
 
 	public static void main(String[] args) {
 		System.out.println("main method");
-		Chapter6 c = new Chapter6();
+		Chap6_Static_Instance c = new Chap6_Static_Instance();
 		System.out.println("main 2");
-		Chapter6 c2 = new Chapter6();
+		Chap6_Static_Instance c2 = new Chap6_Static_Instance();
 		
 	}// end of main
 }// end of class

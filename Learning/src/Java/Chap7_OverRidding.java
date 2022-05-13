@@ -19,7 +19,7 @@ class Point2 extends Object {
 	}
 }
 
-public class OverRidding {
+public class Chap7_OverRidding {
 	public static void main(String[] args) {
 		Point2 p = new Point2(6, 10);
 		System.out.println(p);

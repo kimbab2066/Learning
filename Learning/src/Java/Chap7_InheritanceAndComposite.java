@@ -18,7 +18,7 @@ class Circle2 {
 	}
 }
 
-public class InheritanceAndComposite {
+public class Chap7_InheritanceAndComposite {
 	public static void main(String[] args) {
 		// 상속관계 증명
 		Circle c = new Circle();
