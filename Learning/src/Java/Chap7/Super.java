@@ -1,4 +1,4 @@
-package Java;
+package Java.Chap7;
 
 class Point3 {
 	int x;

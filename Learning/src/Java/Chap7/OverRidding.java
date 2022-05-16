@@ -1,4 +1,4 @@
-package Java;
+package Java.Chap7;
 
 class Point2 extends Object {
 	int x;
@@ -19,7 +19,7 @@ class Point2 extends Object {
 	}
 }
 
-public class Chap7_OverRidding {
+public class OverRidding {
 	public static void main(String[] args) {
 		Point2 p = new Point2(6, 10);
 		System.out.println(p);

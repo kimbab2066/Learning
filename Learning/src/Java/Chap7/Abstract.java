@@ -1,4 +1,4 @@
-package Java;
+package Java.Chap7;
 
 abstract class Player {
 	abstract void play(int pos);
@@ -21,7 +21,7 @@ class AudioPlayer extends Player {
 
 }
 
-public class Chap7_Abstract {
+public class Abstract {
 	public static void main(String[] args) {
 		Player ap = new AudioPlayer(); // 다형성
 		ap.play(100);
