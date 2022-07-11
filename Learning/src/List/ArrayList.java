@@ -89,48 +89,110 @@ public class ArrayList<E> implements List<E> {
 		add(0, value);
 	}
 
+	// 특정 index의 요소 삭제
+	@SuppressWarnings("unchecked")
 	@Override
 	public E remove(int index) {
-		return null;
+		if (index >= size || index < 0) {
+			throw new IndexOutOfBoundsException();
+		}
+		E element = (E) array[index];// tmp
+		array[index] = null;
+		// 삭제요소 뒤에 있는 요소 전부 당겨옴
+		for (int i = index; i < size - 1; i--) {
+			array[i] = array[i + 1];
+			array[i + 1] = null;
+		}
+		size--;
+		resize();
+		return element;
 	}
 
+	// 특정 요소 삭제
 	@Override
 	public boolean remove(Object value) {
-		return false;
+		int index = indexOf(value);
+		if (index == -1) {
+			return false;
+		}
+		remove(index);
+		return true;
 	}
 
+	// type safe 무시
+	@SuppressWarnings("unchecked")
 	@Override
 	public E get(int index) {
-		return null;
+		if (index >= size || index < 0) {
+			throw new IndexOutOfBoundsException();
+		}
+		return (E) array[index];
 	}
 
+	// set = replace
 	@Override
 	public void set(int index, E value) {
-
+		if (index >= size || index < 0) {
+			throw new IndexOutOfBoundsException();
+		}
+		array[index] = value;
 	}
 
+	// 존재 여부 체크
 	@Override
 	public boolean contains(Object value) {
+		if (indexOf(value) >= 0) {
+			return true;
+		}
 		return false;
 	}
 
+	// value와 일치하는 index return
 	@Override
 	public int indexOf(Object value) {
-		return 0;
+		for (int i = 0; i < size; i++) {
+			if (array[i].equals(value)) {
+				return i;
+			}
+		}
+		// 일치하는 경우가 없을 경우 -1
+		return -1;
+	}
+
+	public int LastIndexOf(Object value) {
+		for (int i = size - 1; i >= 0; i--) {
+			if (array[i].equals(value)) {
+				return i;
+			}
+		}
+		return -1;
 	}
 
 	@Override
 	public int size() {
-		return 0;
+		return size;
 	}
 
 	@Override
 	public boolean isEmpty() {
-		return false;
+		return size == 0;
 	}
 
 	@Override
 	public void clear() {
-
+		for (int i = 0; i < size; i++) {
+			array[i] = null;
+		}
+		size = 0;
+		resize();
 	}
+
+	public void show() {
+		for (int i = 0; i < size; i++) {
+			System.out.print(array[i]+" ");
+		}
+	}
+	/*
+	 * 부가 목록 clone(), toArray()
+	 */
 }// end of class
