@@ -189,37 +189,59 @@ public class SinglyLinkedList<E> implements List<E> {
 		Node<E> replaceNode = search(index);
 		replaceNode.data = null;
 		replaceNode.data = value;
-		// search(index).data = value;
+		// search(index).data = value; <- 이 방식도 됨
 	}
 
+	// 사용자가 찾고하자는 요소가 존재하는지 안하는지를 반환
 	@Override
 	public boolean contains(Object value) {
-		// TODO Auto-generated method stub
-		return false;
+		return indexOf(value) >= 0;
+		// return indexOf(value) >= 0 ? true : false;
 	}
 
+	// 사용자가 찾고자하는 요소(value)의 위치(index)를 반환
 	@Override
 	public int indexOf(Object value) {
-		// TODO Auto-generated method stub
-		return 0;
+
+		// index 0부터 시작해서 끝까지 LOOP 돌면서 value와 같은 게 있는지 equals()로 체크 후 return
+		int index = 0;
+		for (Node<E> x = head; x != null; x = x.next) {
+			if (value.equals(x.data)) {
+				return index;
+			}
+			index++;
+		}
+		// 없으면 -1
+		return -1;
 	}
 
 	@Override
 	public int size() {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.size;
 	}
 
 	@Override
 	public boolean isEmpty() {
-		// TODO Auto-generated method stub
-		return false;
+		return size == 0;
 	}
 
 	@Override
 	public void clear() {
-		// TODO Auto-generated method stub
 
+		for (Node<E> x = head; x != null;) {
+			Node<E> nextNode = x.next;
+			x.data = null;
+			x.next = null;
+			x = x.next;
+		}
+		head = tail = null;
+		size = 0;
 	}
 
-}
+	public void show() {
+		System.out.print(head.data + "" + tail.data);
+	}
+	/*
+	 * 부가 목록 clone, toArray, sord
+	 */
+}// end of class
