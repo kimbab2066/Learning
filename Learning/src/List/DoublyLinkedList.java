@@ -1,5 +1,7 @@
 package List;
 
+import java.util.NoSuchElementException;
+
 public class DoublyLinkedList<E> implements List<E> {
 
 	// field
@@ -122,58 +124,180 @@ public class DoublyLinkedList<E> implements List<E> {
 		size++;
 	}
 
+	public E remove() {
+		Node<E> headNode = head;
+		if (headNode == null) {
+			throw new NoSuchElementException();
+		}
+		// 삭제된 노드를 반환하기 위한 임시 변수
+		E element = headNode.data;
+		// head의 다음 노드
+		Node<E> nextNode = head.next;
+
+		// head노드의 데이터들을 모두 삭제
+		head.data = null;
+		head.next = null;
+
+		//
+		if (nextNode != null) {
+			nextNode.prev = null;
+		}
+		head = nextNode;
+		size--;
+
+		if (size == 0) {
+			tail = null;
+		}
+		return element;
+	}
+
 	@Override
 	public E remove(int index) {
-		// TODO Auto-generated method stub
-		return null;
+		if (index >= size || index < 0) {
+			throw new IndexOutOfBoundsException();
+		}
+
+		// 첫 번째 노드인 경우
+		if (index == 0) {
+			E element = head.data;
+			remove();
+			return element;
+		}
+
+		Node<E> prevNode = search(index - 1);// 삭제할 노드의 이전 노드
+		Node<E> removeNode = prevNode.next;// 삭제할 노드
+		Node<E> nextNode = removeNode.next;// 삭제할 노드의 다음 노드
+
+		E element = removeNode.data; // 삭제할 노드의 데이터를 반환할 임시 변수
+
+		prevNode.next = null;
+		removeNode.next = null;
+		removeNode.prev = null;
+		removeNode.data = null;
+
+		if (nextNode.prev != null) {
+			nextNode.prev = null;
+			nextNode.prev = prevNode.next;
+			prevNode.next = nextNode;
+		} else {// 마지막 노드를 삭제했다는 의미
+			tail = nextNode;
+		}
+		size--;
+
+		return element;
 	}
 
 	@Override
 	public boolean remove(Object value) {
-		// TODO Auto-generated method stub
-		return false;
+		Node<E> prevNode = head;
+		Node<E> x = head;// removeNode
+
+		for (; x != null; x = x.next) {
+			if (value.equals(x.data)) {
+				break;
+			}
+			prevNode = x;
+		}
+
+		// 없는 경우
+		if (x == null) {
+			return false;
+		}
+
+		// 찾는 노드가 head인 경우
+		if (x.equals(head)) {
+			remove();
+			return true;
+		} else {
+			Node<E> nextNode = x.next;
+
+			prevNode.next = null;
+			x.data = null;
+			x.next = null;
+			x.prev = null;
+
+			if (nextNode != null) {
+				nextNode.prev = prevNode;
+				prevNode.next = nextNode;
+
+			} else {
+				tail = prevNode;
+			}
+			size--;
+			return true;
+		}
 	}
 
 	@Override
 	public E get(int index) {
-		// TODO Auto-generated method stub
-		return null;
+		return search(index).data;
 	}
 
 	@Override
 	public void set(int index, E value) {
-		// TODO Auto-generated method stub
-
+		Node<E> replaceNode = search(index);
+		replaceNode.data = null;
+		replaceNode.data = value;
+		// search(index).data = value;
 	}
 
+	// 요소의 존재여부
 	@Override
 	public boolean contains(Object value) {
-		// TODO Auto-generated method stub
-		return false;
+		return indexOf(value) >= 0;// 요소가 존재하면 0보다 큼
 	}
 
 	@Override
-	public int indexOf(Object value) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int indexOf(Object o) {// 정방향
+		int index = 0;
+		for (Node<E> x = head; x != null; x = x.next) {
+			if (o.equals(x.data)) {
+				return index;
+			}
+			index++;
+		}
+		return -1;
+	}
+
+	public int lastIndexOf(Object o) {// 역방향
+		int index = size;
+		for (Node<E> x = tail; x != null; x = x.prev) {
+			index--;
+			if (o.equals(x.data)) {
+				return index;
+			}
+		}
+		return -1;
 	}
 
 	@Override
 	public int size() {
-		// TODO Auto-generated method stub
-		return 0;
+		return size;
 	}
 
 	@Override
 	public boolean isEmpty() {
-		// TODO Auto-generated method stub
-		return false;
+		return size == 0;
 	}
 
 	@Override
 	public void clear() {
-		// TODO Auto-generated method stub
-
+		for (Node<E> x = head; x != null;) {
+			Node<E> nextNode = x.next;
+			x.data = null;
+			x.next = null;
+			x.prev = null;
+			x = nextNode;
+		}
+		head = tail = null;
+		size = 0;
 	}
+
+	public void show() {
+		System.out.print(head.data + "" + tail.data);
+	}
+	/*
+	 * 부가 목록 clone, toArray, sort
+	 */
 
 }// end of class

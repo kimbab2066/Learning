@@ -26,5 +26,21 @@ public class Test {
 		link.addFirst(70);
 		System.out.println(link.isEmpty());
 		link.show();
+
+		System.out.println("Doubly");
+		System.out.println("========================");
+		
+		// DoublyLinkedList Test
+		DoublyLinkedList<Integer> dLink = new DoublyLinkedList<>();
+		System.out.println(dLink.add(10));
+		System.out.println(dLink.add(60));
+		System.out.println(dLink.add(20));
+		System.out.println(dLink.add(40));
+		System.out.println(dLink.add(80));
+		System.out.println(dLink.add(50));
+		System.out.println(dLink.contains(20));
+		System.out.println(link.isEmpty());
+		dLink.show();
+
 	}// end of main
 }// end of class
