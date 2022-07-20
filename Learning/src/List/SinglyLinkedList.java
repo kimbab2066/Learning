@@ -1,5 +1,7 @@
 package List;
 
+import Interface_form.List;
+
 public class SinglyLinkedList<E> implements List<E> {
 	private Node<E> head;// 노드의 첫 부분
 	private Node<E> tail; // 노드의 끝 부분

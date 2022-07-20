@@ -2,6 +2,8 @@ package List;
 
 import java.util.NoSuchElementException;
 
+import Interface_form.List;
+
 public class DoublyLinkedList<E> implements List<E> {
 
 	// field

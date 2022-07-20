@@ -2,6 +2,8 @@ package List;
 
 import java.util.Arrays;
 
+import Interface_form.List;
+
 public class ArrayList<E> implements List<E> {
 
 	private static final int DEFAULT_CAPACITY = 10;// 최소(기본) 용적 크기

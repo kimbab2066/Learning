@@ -1,4 +1,4 @@
-package List;
+package Interface_form;
 
 /**
  * List는 ArrayList, SinglyLinkedList, DoublyLinked에 의해 각각 구현
