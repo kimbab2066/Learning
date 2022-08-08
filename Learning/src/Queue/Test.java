@@ -26,16 +26,26 @@ public class Test {
 //		System.out.println();
 //		lique.show();
 		ArrayDeque<Integer> aDeque = new ArrayDeque<>();
-		aDeque.offer(1);
-		aDeque.offer(5);
-		aDeque.offer(4);
-		aDeque.offer(3);
-		aDeque.offer(2);
-		aDeque.offerLast(10);
-		aDeque.show();
-		aDeque.poll();
-		aDeque.pollLast();
+//		aDeque.offer(1);
+//		aDeque.offer(5);
+//		aDeque.offer(4);
+//		aDeque.offer(3);
+//		aDeque.offer(2);
+//		aDeque.offerLast(10);
+//		aDeque.show();
+//		aDeque.poll();
+//		aDeque.pollLast();
+//		System.out.println();
+//		aDeque.show();
+		LinkedListDeque<Integer> lDeque = new LinkedListDeque<>();
+		lDeque.show();
+		lDeque.offerLast(10);
+		lDeque.offerLast(20);
+		lDeque.offerLast(30);
+		lDeque.offerLast(40);
+		lDeque.offerFirst(50);
+		lDeque.show();
+		lDeque.clear();
 		System.out.println();
-		aDeque.show();
 	}
 }
