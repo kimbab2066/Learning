@@ -33,7 +33,7 @@ public class StreamMiddleOperation {
 				.distinct().sorted().forEach(System.out::println);
 		System.out.println();
 
-		String[] lineArr = { "Believe   or not It is true", "Do it Do it Do it" };
+		String[] lineArr = { "Believe  it or not It is true", "Do it Do it Do it" };
 		Stream<String> lineStream = Arrays.stream(lineArr);
 
 		lineStream.flatMap(line -> Stream.of(line.split(" +")))// 정규식 하나 이상의 공백
