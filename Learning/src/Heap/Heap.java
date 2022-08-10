@@ -1,5 +1,6 @@
 package Heap;
 
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.NoSuchElementException;
 
@@ -177,17 +178,101 @@ public class Heap<E> {
 	}
 
 	@SuppressWarnings("unchecked")
-	public void siftDownComparator(int idx, E target, Comparator<? super E> com) {
+	public void siftDownComparator(int idx, E target, Comparator<? super E> comp) {
 		array[idx] = null; // 1이니 root가 null이 됨
+		size--;
+
+		int parent = idx;// 부모 노드를 가리키는 변수
+		int child;// 교환될 자식 노드를 가리키는 변수
+
+		// 왼쪽 자식 노드의 인덱스가 요소의 개수보다 작을 때 까지 반복
+		while ((child = getLeftChild(parent)) <= size) {
+			int right = getRightChild(parent);// 오른쪽 자식 인덱스
+			Object childVal = array[child];// 왼쪽 자식의 값
+
+			// 오른쪽 자식 인덱스가 size보다 작고, 왼쪽 노드 > 오른쪽 노드 인 경우
+			// child 와 childVal을 바꿔준다
+			if (right < size && comp.compare((E) childVal, (E) array[right]) > 0) {
+				child = right;
+				childVal = array[child];
+			}
+			// 재배치할 노드가 자식노드보다 작은 경우 종료
+			if (comp.compare(target, (E) childVal) <= 0) {
+				break;
+			}
+			// 부모 [인덱스] = 자식 노드 값
+			array[parent] = childVal;
+			// 부모 인덱스 = 자식 인덱스
+			parent = child;
+		}
+		// 재배치 위치에 타겟값
+		array[parent] = target;
+
+		// 용적 resize
+		if (array.length > DEFAULT_CAPACITY && size < array.length / 4) {
+			resize(Math.max(DEFAULT_CAPACITY, array.length / 2));
+		}
+	}
+
+	// Comparable을 이용한 sift-down
+	@SuppressWarnings("unchecked")
+	public void siftDownComparable(int idx, E target) {
+		Comparable<? super E> comp = (Comparable<? super E>) target;
+
+		array[idx] = null;
 		size--;
 
 		int parent = idx;
 		int child;
-		
+
+		while ((child = getLeftChild(parent)) <= size) {
+			int right = getRightChild(parent);
+
+			Object childVal = array[child];
+			// 오른쪽 자식 인덱스가 size보다 작고, 왼쪽 노드 > 오른쪽 노드 인 경우
+			// child 와 childVal을 바꿔준다
+			if (right <= size && ((Comparable<? super E>) childVal).compareTo((E) array[right]) > 0) {
+				child = right;
+				childVal = array[child];
+			}
+			// 재배치할 노드가 자식노드보다 작은 경우 종료
+			if (comp.compareTo((E) childVal) <= 0) {
+				break;
+			}
+			// 부모 [인덱스] = 자식 노드 값
+			array[parent] = childVal;
+			// 부모 인덱스 = 자식 인덱스
+			parent = child;
+		}
+		array[parent] = comp;
+		if (array.length > DEFAULT_CAPACITY && size < array.length / 4) {
+			resize(Math.max(DEFAULT_CAPACITY, array.length / 2));
+		}
 	}
 
-	@SuppressWarnings("unchecked")
-	public void siftDownComparable(int idx, E target) {
+	// size, peek, isEmpty, toArray 메소드 구현
+	public int size() {
+		return size;
+	}
 
+	public E peek() {
+		if (array[1] == null) {
+			throw new NoSuchElementException();
+		}
+		return (E) array[1];
+	}
+
+	public boolean isEmpty() {
+		return size == 0;
+	}
+
+	public Object[] toArray() {
+		return Arrays.copyOf(array, size + 1);
+	}
+
+	public void show() {
+		for (Object val : array) {
+			System.out.print(val + " ");
+		}
 	}
 }// end of class
