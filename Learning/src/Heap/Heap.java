@@ -134,16 +134,19 @@ public class Heap<E> {
 	private void siftUpComparable(int idx, E target) {
 		// target과 비교될 comp변수
 		Comparable<? super E> comp = (Comparable<? super E>) target;
-
+		// root노드보다 클 때까지만 탐색
 		while (idx > 1) {
 			int parent = getParent(idx);
 			Object parentVal = array[parent];
+			// target노드와 부모 노드의 값 비교 후 크면 종료
 			if (comp.compareTo((E) parentVal) >= 0) {
 				break;
 			}
+			// 현재 삽입될 위치에 부모노드 값으로 교체, 타겟 노드 위치를 부모노드로 변경
 			array[idx] = parentVal;
 			idx = parent;
 		}
+		// 삽입 될 위치에 저장
 		array[idx] = comp;
 	}
 	// 최대힙을 구현하고 싶은 경우 >= 0 부분을 <=로 바꾸면 된다
@@ -155,13 +158,14 @@ public class Heap<E> {
 		if (array[1] == null) {// 비어 있는 경우
 			throw new NoSuchElementException();
 		}
-		E element = (E) array[1]; // 임시 변수
+		E result = (E) array[1]; // 임시 변수
 		E target = (E) array[size]; // 타겟이 될 요소
 
-		array[size] = null;
+		array[size] = null; // 타겟 노드 비우기
 
-		siftDown(1, target);
-		return element;
+		// 삭제할 노드의 인덱스와 재배치 타겟 노드
+		siftDown(1, target);// 루트 삭제되니 1 넘김
+		return result;
 	}
 
 	/*
@@ -179,7 +183,7 @@ public class Heap<E> {
 
 	@SuppressWarnings("unchecked")
 	public void siftDownComparator(int idx, E target, Comparator<? super E> comp) {
-		array[idx] = null; // 1이니 root가 null이 됨
+		array[idx] = null; // 삭제할 인덱스의 노드를 삭제
 		size--;
 
 		int parent = idx;// 부모 노드를 가리키는 변수
@@ -187,7 +191,9 @@ public class Heap<E> {
 
 		// 왼쪽 자식 노드의 인덱스가 요소의 개수보다 작을 때 까지 반복
 		while ((child = getLeftChild(parent)) <= size) {
+
 			int right = getRightChild(parent);// 오른쪽 자식 인덱스
+
 			Object childVal = array[child];// 왼쪽 자식의 값
 
 			// 오른쪽 자식 인덱스가 size보다 작고, 왼쪽 노드 > 오른쪽 노드 인 경우
@@ -222,13 +228,14 @@ public class Heap<E> {
 		array[idx] = null;
 		size--;
 
-		int parent = idx;
-		int child;
+		int parent = idx;// 부모 노드를 가리키는 변수
+		int child;// 교환될 자식 노드를 가리키는 변수
 
 		while ((child = getLeftChild(parent)) <= size) {
-			int right = getRightChild(parent);
+			int right = getRightChild(parent);// 오른쪽 자식 인덱스
 
-			Object childVal = array[child];
+			Object childVal = array[child];// 왼쪽 자식의 값
+
 			// 오른쪽 자식 인덱스가 size보다 작고, 왼쪽 노드 > 오른쪽 노드 인 경우
 			// child 와 childVal을 바꿔준다
 			if (right <= size && ((Comparable<? super E>) childVal).compareTo((E) array[right]) > 0) {
@@ -244,7 +251,9 @@ public class Heap<E> {
 			// 부모 인덱스 = 자식 인덱스
 			parent = child;
 		}
+		// 재배치 위치의 값
 		array[parent] = comp;
+
 		if (array.length > DEFAULT_CAPACITY && size < array.length / 4) {
 			resize(Math.max(DEFAULT_CAPACITY, array.length / 2));
 		}
@@ -266,6 +275,7 @@ public class Heap<E> {
 		return size == 0;
 	}
 
+	// Heap배열의 요소 배치 확인
 	public Object[] toArray() {
 		return Arrays.copyOf(array, size + 1);
 	}
