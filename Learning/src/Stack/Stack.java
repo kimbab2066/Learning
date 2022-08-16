@@ -92,7 +92,7 @@ public class Stack<E> implements StackInterface<E> {
 		return (E) array[size - 1];
 	}
 
-	// '찾으려는 데이터가 상단의 top 기준으로 얼마만큼 떨어져 있는지'에 대한 상대적 위치 값
+	// 찾으려는 데이터가 상단의 top 기준으로 얼마만큼 떨어져 있는지'에 대한 상대적 위치 값
 	@Override
 	public int search(Object value) {
 		for (int idx = size - 1; idx >= 0; idx--) {
