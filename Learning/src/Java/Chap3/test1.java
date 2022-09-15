@@ -10,5 +10,11 @@ public class test1 {
 		float f = l;
 		i = ch;
 		System.out.println();
+
+		//
+		int f1 = 100;
+		float c1 = (int) ((5 / 9f * (f1 - 32)) * 100 + 1) / 100f;
+		System.out.println(c1);
+
 	}
 }
